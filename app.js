@@ -1,10 +1,15 @@
 //. app.js
 
+var cfenv = require( 'cfenv' );
 var express = require( 'express' );
 var settings = require( './settings' );
 var IpFilter = require( './ip-filter' );
 
 var app = express();
+var appEnv = cfenv.getAppEnv();
+
+//. http://expressjs.com/ja/api.html
+app.set( 'trust proxy', settings.trust_proxy );
 
 if( settings.PERMITTED_IPS && settings.PERMITTED_IPS.length ){
   var ipFilter = IpFilter( settings.PERMITTED_IPS );
@@ -17,6 +22,6 @@ app.get( '/', function( req, res ){
   res.end();
 });
 
-var port = 3000;
+var port = appEnv.port || 3000;
 app.listen( port );
 console.log( 'server started on ' + port );

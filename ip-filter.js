@@ -22,7 +22,8 @@ const IpFilter = function( permittedIps ){
 
   const filter = function( req, res, next ){
     const ip = req.ip || req.connection.remoteAddress;
-    //console.log( 'ip=' + ip );
+    console.log( 'req.ip=' + req.ip );
+    console.log( 'req.connection.remoteAddress=' + req.connection.remoteAddress );
 
     if( isPermitted( ip ) ){
       next();
