@@ -1,15 +1,9 @@
 //. ip-filter.js
+var rangeCheck = require('range_check');
 
 const IpFilter = function( permittedIps ){
   const compareIp = function( remoteIp, permittedIp ){
-    const pos = permittedIp.indexOf( '*' );
-    if( pos === 0 ){
-      return true;
-    }else if( pos >= 0 ){
-      return remoteIp.startsWith( permittedIp.substring( 0, pos ) );
-    }else{
-      return remoteIp === permittedIp;
-    }
+    return rangeCheck.inRange(remoteIp, permittedIp)
   };
 
   const isPermitted = function( ip ){
